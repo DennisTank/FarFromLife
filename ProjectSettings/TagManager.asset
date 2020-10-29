@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Device
+  - CamBody
+  - LB
+  - HB
   layers:
   - Default
   - TransparentFX
@@ -13,12 +17,12 @@ TagManager:
   - UI
   - 
   - 
+  - Player
+  - Wall
+  - Enemy
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - P_bullet
+  - E-bullet
   - 
   - 
   - 
