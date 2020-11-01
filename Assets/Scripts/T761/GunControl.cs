@@ -16,7 +16,7 @@ public class GunControl : MonoBehaviour
     private GameObject current,previous;
 
     private Vector3 Hit,Direction;
-    private bool wallRunning,itsDevice;
+    private bool wallRunning,itsDevice,canShoot;
     private int onWall;
     private float nextFire,viewDistance;
 
@@ -49,7 +49,7 @@ public class GunControl : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if (aimMode  && Time.time > nextFire && currentFireStrength>0)
+            if (aimMode && canShoot && Time.time > nextFire && currentFireStrength>0)
             {
                 GetComponent<Life>().currentLife -= 1;
                 nextFire = Time.time + fireRate;
@@ -80,6 +80,7 @@ public class GunControl : MonoBehaviour
         }
         CamPoint.GetComponent<TPCamera>().reset = Input.GetMouseButton(2);
         CamPoint.GetComponent<TPCamera>().wallRun = wallRunning;
+        CamPoint.GetComponent<TPCamera>().canshoot = canShoot;
         CamPoint.GetComponent<Animator>().SetBool("boost",
             GetComponentInParent<PlayerController>().boosting);
 
@@ -96,9 +97,13 @@ public class GunControl : MonoBehaviour
         
         if (Physics.Raycast(ray, cam.transform.forward, out hit, viewDistance))
         {
-            // for not hitting itself
             Hit = hit.point;
-
+            // for not hitting itself
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                canShoot = false;
+            }
+            else { canShoot = true; }
             // for hacking
             if (hit.collider.gameObject.CompareTag("Device"))
             {
@@ -123,6 +128,7 @@ public class GunControl : MonoBehaviour
         else { 
             Hit = ray + (cam.transform.forward * viewDistance);
             itsDevice = false;
+            canShoot = true;
         }
 
         if (aimMode) {

@@ -13,6 +13,7 @@ public class Beams : MonoBehaviour
     private void Awake()
     {
         rg = GetComponent<Rigidbody>();
+        direction = direction.normalized * 500;
     }
     void Update()
     {

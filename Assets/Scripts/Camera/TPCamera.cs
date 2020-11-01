@@ -11,13 +11,14 @@ public class TPCamera : MonoBehaviour
     public LayerMask Player;
 
     public Animator crossHairUI;
+    public Image dot, crossHair;
 
     private Vector2 xOrbitLimits; // x-> maxValue y-> minValue
     private Vector3 newPosition, newRotation;
     private float xMouse, yMouse;
     private bool isViewColl;
 
-    [HideInInspector] public bool aim, wallRun, reset;
+    [HideInInspector] public bool aim, wallRun, reset,canshoot;
     
 
     Animator anime;
@@ -54,7 +55,8 @@ public class TPCamera : MonoBehaviour
     void CrossHair()
     {
         crossHairUI.SetBool("aim",aim);
-        // send this info from gunController
+        dot.color = (canshoot) ? Color.white : Color.gray;
+        crossHair.color = (canshoot) ? Color.white : Color.gray;
     }
     void Animations() {
         anime.SetBool("Aim",aim|isViewColl);

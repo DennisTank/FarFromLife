@@ -17,11 +17,11 @@ public class flySnake : basicMovements
     {
         checkMoves = false;
         goHigh = true;
-        dist = new int[4] { 20, 20, 20, 20 };
+        dist = new int[4] { 30, 30, 30, 30 };
         y = x = 0;
         z = 1;
         yC = 0;
-        InvokeRepeating("randomRot",0,5);
+        InvokeRepeating("rotToPlayer",0,5);
     }
     private void FixedUpdate()
     {
@@ -49,13 +49,18 @@ public class flySnake : basicMovements
             yC = (goHigh) ? mc.CurveHigh(yC,1,0.01f):mc.CurveLow(yC,-1,0.01f);
             
             transform.eulerAngles += Vector3.up*yC;
- 
+            transform.position += Vector3.up * yC * 0.1f;
+
         }
-        move();
+        move();     
     }
-    void randomRot() {
-        if (Random.Range(0, 5) > 3) {
-            transform.eulerAngles += Vector3.up*Random.Range(-45,45);
-        }
+    void rotToPlayer()
+    {
+        float x, z, angle;
+        x = player.transform.position.x - transform.position.x;
+        z = player.transform.position.z - transform.position.z;
+        angle = Mathf.Atan2(x, z) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, angle, 0);
+        //inst bulls
     }
 }
